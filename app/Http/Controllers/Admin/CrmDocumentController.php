@@ -2,20 +2,42 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Http\Controllers\Controller;
 use App\Models\CrmDocument;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class CrmDocumentController extends Controller
 {
+//    public function index()
+//    {
+//        abort_if(Gate::denies('crm_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+//
+//        return view('admin.crm-document.index');
+//    }
+
     public function index()
     {
         abort_if(Gate::denies('crm_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.crm-document.index');
+        $apiUrl = 'http://localhost:8989/admin/crm-documents'; // URL da API
+
+        try {
+            $apiResponse = Http::get($apiUrl);
+            $apiData = json_decode($apiResponse->body(), true);
+
+            return view('admin.crm-document.index', ['crmDocuments' => $apiData]);
+        } catch (\Exception $e) {
+            // Lidar com o erro, como exibir uma mensagem ou log
+            return view('admin.crm-document.index', ['crmDocuments' => []]);
+        }
     }
+
+
+
 
     public function create()
     {

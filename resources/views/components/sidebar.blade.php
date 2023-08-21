@@ -34,51 +34,9 @@
             <!-- Heading -->
 
             <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-                <li class="items-center">
-                    <a href="{{ route("admin.home") }}" class="{{ request()->is("admin") ? "sidebar-nav-active" : "sidebar-nav" }}">
-                        <i class="fas fa-tv"></i>
-                        {{ trans('global.dashboard') }}
-                    </a>
-                </li>
 
-                @can('user_management_access')
-                    <li class="items-center">
-                        <a class="has-sub {{ request()->is("admin/permissions*")||request()->is("admin/roles*")||request()->is("admin/users*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#" onclick="window.openSubNav(this)">
-                            <i class="fa-fw fas c-sidebar-nav-icon fa-users">
-                            </i>
-                            {{ trans('cruds.userManagement.title') }}
-                        </a>
-                        <ul class="ml-4 subnav hidden">
-                            @can('permission_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/permissions*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.permissions.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-unlock-alt">
-                                        </i>
-                                        {{ trans('cruds.permission.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('role_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/roles*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.roles.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-briefcase">
-                                        </i>
-                                        {{ trans('cruds.role.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('user_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/users*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.users.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-user">
-                                        </i>
-                                        {{ trans('cruds.user.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endcan
+
+
                 @can('basic_c_r_m_access')
                     <li class="items-center">
                         <a class="has-sub {{ request()->is("admin/crm-statuses*")||request()->is("admin/crm-customers*")||request()->is("admin/crm-notes*")||request()->is("admin/crm-documents*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#" onclick="window.openSubNav(this)">

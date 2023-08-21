@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Http;
 
 class Index extends Component
 {
@@ -58,6 +59,8 @@ class Index extends Component
         $this->selected = [];
     }
 
+    public $apiData = [];
+
     public function mount()
     {
         $this->sortBy            = 'id';
@@ -65,6 +68,17 @@ class Index extends Component
         $this->perPage           = 100;
         $this->paginationOptions = config('project.pagination.options');
         $this->orderable         = (new CrmDocument())->orderable;
+
+        $apiUrl = 'http://127.0.0.1:8989/admin/crm-documents'; // URL da API
+
+        try {
+            $response = Http::get($apiUrl);
+            $this->apiData = $response->json();
+        } catch (\Exception $e) {
+            // Lidar com o erro, como exibir uma mensagem ou log
+            $this->apiData = [];
+//            echo "Erro ao acessar a API: " . $e->getMessage();
+        }
     }
 
     public function render()

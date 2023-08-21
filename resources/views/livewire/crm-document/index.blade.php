@@ -60,30 +60,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($crmDocuments as $crmDocument)
+{{--                    @forelse($crmDocuments as $crmDocument)--}}
+                        @forelse($crmDocuments as $crmDocument)
                         <tr>
                             <td>
-                                <input type="checkbox" value="{{ $crmDocument->id }}" wire:model="selected">
+                                <input type="checkbox" value="{{ $crmDocument['id'] }}" wire:model="selected">
                             </td>
                             <td>
-                                {{ $crmDocument->id }}
+                                {{ $crmDocument['id'] }}
                             </td>
                             <td>
-                                @if($crmDocument->customer)
-                                    <span class="badge badge-relationship">{{ $crmDocument->customer->first_name ?? '' }}</span>
+                                @if(isset($crmDocument['customer']))
+                                    <span class="badge badge-relationship">{{ $crmDocument['customer']['first_name'] ?? '' }}</span>
                                 @endif
                             </td>
                             <td>
-                                @foreach($crmDocument->document_file as $key => $entry)
+                                @foreach($crmDocument['document_file'] as $entry)
                                     <a class="link-light-blue" href="{{ $entry['url'] }}">
-                                        <i class="far fa-file">
-                                        </i>
+                                        <i class="far fa-file"></i>
                                         {{ $entry['file_name'] }}
                                     </a>
                                 @endforeach
                             </td>
                             <td>
-                                {{ $crmDocument->name }}
+                                {{ $crmDocument['name'] }}
                             </td>
                             <td>
                                 <div class="flex justify-end">
@@ -106,9 +106,9 @@
                             </td>
                         </tr>
                         @empty
-                        <tr>
-                            <td colspan="10">No entries found.</td>
-                        </tr>
+                            <tr>
+                                <td colspan="10">No entries found.</td>
+                            </tr>
                     @endforelse
                 </tbody>
             </table>
